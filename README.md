@@ -47,12 +47,8 @@
 
 ###
 
-<!-- Battle Arena (gera pelo workflow .github/workflows/battle-arena.yml) -->
-<p align="center">
-  <img src="./assets/battle.svg" alt="ThunderKat Battle Arena" />
-</p>
+![ThunderKat Battle Arena](assets/test.svg)
 
-<!-- Obs: o SVG é gerado automaticamente pelo workflow .github/workflows/battle-arena.yml -->
 
 ###
 
