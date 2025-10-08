@@ -47,7 +47,8 @@
 
 ###
 
-![ThunderKat Battle Arena](assets/test.svg)
+![ThunderKat Battle Arena](assets/battle.svg)
+
 
 
 ###
