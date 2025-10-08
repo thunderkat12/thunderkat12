@@ -47,9 +47,13 @@
 
 ###
 
-![ThunderKat Battle Arena](assets/battle.svg)
-
-
+<!-- SNAKE: gerado pelo workflow .github/workflows/snake.yml no branch 'output' -->
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thunderkat12/thunderkat12/refs/heads/output/github-contribution-grid-snake-dark.svg">
+    <img alt="Snake animation" src="https://raw.githubusercontent.com/thunderkat12/thunderkat12/refs/heads/output/github-contribution-grid-snake.svg">
+  </picture>
+</p>
 
 ###
 
