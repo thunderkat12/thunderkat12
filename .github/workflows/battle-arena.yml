@@ -1,89 +1,28 @@
-// scripts/build-battle.js
-<defs>
-<linearGradient id='grad' x1='0' x2='1' y1='0' y2='0'>
-<stop offset='0%' stop-color='#22d3ee'/>
-<stop offset='100%' stop-color='#8b5cf6'/>
-</linearGradient>
-<filter id='card' x='-10%' y='-10%' width='120%' height='120%'>
-<feDropShadow dx='0' dy='8' stdDeviation='10' flood-color='#0b1220' flood-opacity='0.8'/>
-</filter>
-</defs>
+name: Battle Arena
 
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 9 * * *"
 
-<rect x='0' y='0' width='100%' height='100%' fill='#0b1220'/>
+permissions:
+  contents: write
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-<!-- Card principal -->
-<g filter='url(#card)'>
-<rect x='${pad}' y='${pad}' width='${W - pad*2}' height='${H - pad*2}' rx='18' fill='#0f172a' stroke='#1f2937'/>
-</g>
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-
-<g transform='translate(${pad*2},${pad*2})'>
-<text x='0' y='0' fill='#e5e7eb' font-family='Inter,Segoe UI,Roboto,Arial' font-size='28' font-weight='600'>⚡ ${title}</text>
-<text x='0' y='28' fill='#94a3b8' font-family='Inter,Segoe UI,Roboto,Arial' font-size='14'>Followers: ${k(model.followers)} · Repos analisados: ${model.repoCount}</text>
-
-
-${bar(0, 70, model.totalContrib, hpMax, 'HP (Contribuições/ano)')}
-${bar(0, 70 + (barH+gap), model.mergedPRs, atkMax, 'Ataque (PRs merged)')}
-${bar(0, 70 + 2*(barH+gap), model.closedIssues, defMax, 'Defesa (Issues fechadas)')}
-${bar(0, 70 + 3*(barH+gap), model.totalStars, spcMax, 'Especial (Estrelas)')}
-</g>
-
-
-<!-- Fighters por linguagem (lado direito) -->
-<g>
-<text x='${W - pad - 520}' y='${pad*2 + 12}' fill='#e5e7eb' font-family='Inter,Segoe UI,Roboto,Arial' font-size='18' font-weight='600'>Fighters por Linguagem</text>
-<text x='${W - pad - 520}' y='${pad*2 + 32}' fill='#94a3b8' font-family='Inter,Segoe UI,Roboto,Arial' font-size='12'>Proporcional às estrelas dos repositórios</text>
-${fighters}
-</g>
-
-
-${arena}
-</svg>`;
-}
-
-
-(async () => {
-const data = await gql(GQL, { login });
-const u = data.user;
-
-
-let stars = 0; const langMap = new Map(); const colorMap = new Map();
-const repos = u.repositories.nodes || [];
-for (const r of repos) {
-stars += toInt(r.stargazerCount, 0);
-if (r.primaryLanguage && r.primaryLanguage.name) {
-const name = r.primaryLanguage.name;
-langMap.set(name, (langMap.get(name) || 0) + toInt(r.stargazerCount, 0));
-if (r.primaryLanguage.color) colorMap.set(name, r.primaryLanguage.color);
-}
-}
-
-
-const langTop = Array.from(langMap.entries())
-.map(([name, s]) => ({ name, stars: s, color: colorMap.get(name) }))
-.sort((a, b) => b.stars - a.stars)
-.slice(0, 6);
-
-
-const model = {
-name: u.name,
-login: u.login,
-followers: toInt(u.followers.totalCount),
-totalContrib: toInt(u.contributionsCollection.contributionCalendar.totalContributions),
-mergedPRs: toInt(u.pullRequests.totalCount),
-closedIssues: toInt(u.issues.totalCount),
-totalStars: toInt(stars),
-repoCount: repos.length,
-langTop,
-starTotal: Math.max(1, stars)
-};
-
-
-const svg = buildSVG(model);
-const outDir = path.join(process.cwd(), 'assets');
-if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, 'battle.svg'), svg, 'utf8');
-console.log('✔ Battle SVG gerado em assets/battle.svg');
-})();
+      - name: Gerar SVG (Battle)
+        run: |
+          mkdir -p assets
+          if [ -f package-lock.json ]; then npm ci --silent; else npm i --silent; fi
+          npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BATTLE_LOGIN: thunderkat12   # força seu us_
