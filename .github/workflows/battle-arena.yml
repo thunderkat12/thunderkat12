@@ -2,7 +2,7 @@ name: Battle Arena
 
 on:
   schedule:
-    - cron: '0 9 * * *'   # diário às 09:00 UTC (ajuste como quiser)
+    - cron: '0 9 * * *'     # diário 09:00 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -13,20 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Instalar deps (se houver)
+
+      - name: Instalar deps
         run: |
           if [ -f package-lock.json ]; then npm ci --silent; else npm i --silent; fi
+
       - name: Gerar SVG
         run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Opcional: force um login específico (se este repo não for seu perfil)
+          # Se não for seu repo de perfil, descomente a próxima linha:
           # BATTLE_LOGIN: thunderkat12
-      - name: Commit automático
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'chore: update battle.svg'
-          file_pattern: assets/battle.svg
+
+      - name: Commit do SVG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: update battle.svg" || echo "nada para commitar"
+          git push
