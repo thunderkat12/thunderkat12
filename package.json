@@ -1,0 +1,10 @@
+{
+  "name": "github-battle-arena",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Gera um SVG dinâmico de batalha para o README usando dados do GitHub",
+  "license": "MIT",
+  "scripts": {
+    "build": "node scripts/build-battle.js"
+  }
+}

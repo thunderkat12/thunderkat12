@@ -47,12 +47,12 @@
 
 ###
 
-<!-- Snake (gera pelo workflow .github/workflows/snake.yml) -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thunderkat12/thunderkat12/output/snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thunderkat12/thunderkat12/output/snake.svg">
-  <img alt="GitHub Snake" src="https://raw.githubusercontent.com/thunderkat12/thunderkat12/output/snake.svg">
-</picture>
+<!-- Battle Arena (gera pelo workflow .github/workflows/battle-arena.yml) -->
+<p align="center">
+  <img src="./assets/battle.svg" alt="ThunderKat Battle Arena" />
+</p>
+
+<!-- Obs: o SVG é gerado automaticamente pelo workflow .github/workflows/battle-arena.yml -->
 
 ###
 
