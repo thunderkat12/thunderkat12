@@ -1,35 +1,33 @@
-name: 🐍 Generate Snake
+name: Snake
 
 on:
+  workflow_dispatch: {}
   schedule:
-    - cron: "0 0 * * *"   # roda todo dia 00:00 UTC
-  workflow_dispatch:       # permite rodar manualmente
-  push:
-    branches: [ "main" ]   # ajuste se sua branch default for outra
+    - cron: "0 9 * * *"   # diário 09:00 UTC
 
 permissions:
-  contents: write          # NECESSÁRIO para publicar na branch output
+  contents: write
 
 jobs:
-  generate:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Generate Snake SVGs
+      # Gera os arquivos da cobra na própria pasta assets/
+      - name: Generate snake SVGs
         uses: Platane/snk@v3
         with:
           github_user_name: thunderkat12
           outputs: |
-            dist/snake.svg
-            dist/snake-dark.svg?palette=github-dark
+            assets/snake.svg
+            assets/snake-dark.svg?palette=github-dark
 
-      - name: Publish to output branch
-        uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Faz commit no MESMO branch (main)
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: update snake svg" || echo "nada para commitar"
+          git push
