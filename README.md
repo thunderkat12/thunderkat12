@@ -47,13 +47,9 @@
 
 ###
 
-<!-- SNAKE: gerado pelo workflow .github/workflows/snake.yml no branch 'output' -->
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thunderkat12/thunderkat12/refs/heads/output/github-contribution-grid-snake-dark.svg">
-    <img alt="Snake animation" src="https://raw.githubusercontent.com/thunderkat12/thunderkat12/refs/heads/output/github-contribution-grid-snake.svg">
-  </picture>
-</p>
+![Snake animation - light](https://raw.githubusercontent.com/thunderkat12/thunderkat12/output/github-contribution-grid-snake.svg#gh-light-mode-only)
+![Snake animation - dark](https://raw.githubusercontent.com/thunderkat12/thunderkat12/output/github-contribution-grid-snake-dark.svg#gh-dark-mode-only)
+
 
 ###
 
