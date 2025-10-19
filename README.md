@@ -53,6 +53,12 @@ I study analysis and systems development at Senac
 ---
 
 ## 📊 Estatísticas GitHub
+
+### Contribution Graph
+<p align="center">
+  <img alt="Contribution Graph" src="https://github-readme-activity-graph.vercel.app/graph?username=thunderkat12&theme=tokyo-night&hide_border=true&bg_color=1a1b27&color=70a5fd&line=bf91f3&point=38bdae&area=true&area_color=70a5fd" />
+</p>
+
 <p align="center">
   <img alt="GitHub Stats" src="https://github-readme-stats.vercel.app/api?username=thunderkat12&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" />
 </p>
